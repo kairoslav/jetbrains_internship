@@ -2,7 +2,7 @@ import argparse
 import os
 
 
-def find_literals(line: str) -> list:
+def find_literals(line: str) -> list[str]:
     literals = []
     i = 0
     while i < len(line):
@@ -11,6 +11,8 @@ def find_literals(line: str) -> list:
             i += 1
             while line[i] != "'":
                 i += 1
+                if i < len(line) - 1 and line[i:i + 2] == r"\'":
+                    i += 2
             right_border = i
             literals.append(line[left_border + 1: right_border])
         if line[i] == '"':
@@ -18,6 +20,8 @@ def find_literals(line: str) -> list:
             i += 1
             while line[i] != '"':
                 i += 1
+                if i < len(line) - 1 and line[i:i + 2] == r"\"":
+                    i += 2
             right_border = i
             literals.append(line[left_border + 1: right_border])
         i += 1
